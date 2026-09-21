@@ -37,10 +37,23 @@ public class IngestionServiceApp {
         CSVReader csvReader = new CSVReaderBuilder(isr).withSkipLines(1).build())
         {
 
+            String [] nextRecord ;
+
+            while ((nextRecord = csvReader.readNext()) != null){
+
+                if (nextRecord.length < 4) continue;
+
+                String inputHubID = nextRecord[0].trim().toUpperCase() ;
+                String inputHubName= nextRecord[1].trim().toUpperCase() ;
+                String inputProvince = nextRecord[2].trim().toUpperCase() ;
+                String inputDistrict = nextRecord[3].trim().toUpperCase() ;
+            }
+
 
         }catch (Exception e ){
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) {
