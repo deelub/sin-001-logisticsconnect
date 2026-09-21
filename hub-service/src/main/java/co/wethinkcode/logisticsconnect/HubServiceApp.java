@@ -44,9 +44,29 @@ public class HubServiceApp {
     }
 
     public static void main(String[] args) {
+        getCleanedData();
         Javalin app = Javalin.create().start(7051);
 
         app.get("/health", ctx -> ctx.result("OK"));
+        app.get ("hubs/{id}", ctx -> {
+
+            String id= ctx.pathParam("id");
+
+            if (cleanedList.isEmpty()){
+                getCleanedData();
+            }
+
+            HubRecord foundRecord = cleanedList.stream()
+                    .filter(record -> record.hubID().equalsIgnoreCase(id))
+                    .findFirst()
+                    .orElse(null);
+
+            if (foundRecord != null) {
+                ctx.json(foundRecord);
+            } else {
+                ctx.status(404).result("Intersection not found");
+            }
+        });
 
         // TODO (Serves provinces and sorting centers (place-name source of truth).)
         // Add domain endpoints for hub-service here.
