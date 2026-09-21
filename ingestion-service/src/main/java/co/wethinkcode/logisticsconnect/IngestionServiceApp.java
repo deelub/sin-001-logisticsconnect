@@ -19,13 +19,13 @@ public class IngestionServiceApp {
         private final String hubID;
         private final String hubName;
         private final String province;
-        private final String district;
+        private final String flag;
 
-        public modelRecords(String hubID, String province, String hubName, String district){
+        public modelRecords(String hubID, String province, String hubName, String flag){
             this.hubID = hubID;
             this.hubName = hubName;
             this.province = province;
-            this.district= district;
+            this.flag= flag;
 
         }
 
@@ -118,7 +118,7 @@ public class IngestionServiceApp {
         Javalin app = Javalin.create().start(7050);
 
         app.get("/health", ctx -> ctx.result("OK"));
-
+        app.get("/hubs", ctx -> ctx.json(cleanFile("/hubs-global.csv")));
         // TODO: read and clean src/main/resources/hubs-global.csv (hubs, sorting centers, regional districts data —
         // trim whitespace, fix casing, normalize dates/booleans) and expose the
         // cleaned records here for the other services to consume.
