@@ -29,6 +29,11 @@ public class IngestionServiceApp {
 
         }
 
+        public String getHubID() { return hubID; }
+        public String getHubName() { return hubName; }
+        public String getProvince() { return province; }
+        public String getFlag() { return flag; }
+
     }
 
     public static List<modelRecords> cleanFile(String filename){
@@ -64,8 +69,10 @@ public class IngestionServiceApp {
                     case "FREESTATE":
                     case "NORTH WEST":
                         baseProvince = nextRecord[1].trim();
+                        break;
                     default :
                         baseProvince = "null";
+                        break;
 
                 }
 
@@ -81,8 +88,10 @@ public class IngestionServiceApp {
                     case "NELSPRUIT HUB":
                     case "KIMBERLY HUB":
                         baseHubName= nextRecord[2].trim();
+                        break;
                     default:
                         baseHubName="null";
+                        break;
                 }
 
                 switch (inputFlag) {
@@ -90,20 +99,20 @@ public class IngestionServiceApp {
                     case "YES":
                     case "TRUE":
                     case "1":
-                        baseFlag= "true";
+                        baseFlag= "True";
                         break;
                     case "N":
                     case "NO":
                     case "FALSE":
                     case "0":
-                        baseFlag= "false";
+                        baseFlag= "False";
                         break;
                     case "UNKNOWN":
                         baseFlag = "UNKNOWN";
                     case "N/A":
                         baseFlag = "N/A";
                     default:
-                        baseFlag = "null";
+                        baseFlag = "Null";
                 }
                 records.add(new modelRecords(inputHubID, Character.toUpperCase(baseProvince.charAt(0)) + baseProvince.substring(1).toLowerCase(), Character.toUpperCase(baseHubName.charAt(0)) + baseHubName.substring(1).toLowerCase(Locale.ROOT), baseFlag));
             }
